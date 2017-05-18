@@ -1,0 +1,8 @@
+{
+    "error_db_connection": "Error to connect MongoDB",
+    "server_running": "Server is running in port: ",
+    "err_save_todo": "Error to save ToDo",
+    "err_get_todos": "Error to get ToDo list",
+    "err_delete_todo": "Error to delete ToDo",
+    "err_update_todo": "Error to update ToDo"
+}

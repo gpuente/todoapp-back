@@ -1,22 +1,20 @@
 'use strict'
-let Todo = require('../models/todo.model');
+const Todo = require('../models/todo.model');
 
 async function getTodos(req, res){
-    try{
-        let todo = new Todo();
-        let todos = await todo.find();
+    try{ 
+        let todos = await Todo.find({}).exec();
         if(!todos) return res.status(500).send({message: global.st.err_get_todos});
         res.status(200).send({todos: todos});
     }catch(err){
-        res.status(500).send({message: global.sterr_get_todos});
+        res.status(500).send({message: global.st.err_get_todos});
     }
 }
 
 
 async function deleteTodo(req, res){
     try{
-        let todo = new Todo();
-        let todoRemoved = await todo.findByIdAndRemove(req.body.id);
+        let todoRemoved = await Todo.findByIdAndRemove(req.params.id);
         if(!todoRemoved) return res.status(500).send({message: global.st.err_delete_todo});
         res.status(200).send({removed: todoRemoved});
     }catch(err){
@@ -41,8 +39,7 @@ async function saveTodo(req, res){
 async function updateTodo(req, res){
     try{
         let id = req.params.id;
-        let todo = new Todo();
-        let todoUpdated = await todo.findByIdAndUpdate(id, {complete: req.body.complete});
+        let todoUpdated = await Todo.findByIdAndUpdate(id, {complete: req.body.complete});
         if(!todoUpdated) return res.status(500).send({message: global.st.err_update_todo});
         res.status(200).send({todo: todoUpdated});
     }catch(err){

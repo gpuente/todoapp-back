@@ -26,7 +26,6 @@ async function deleteTodo(req, res){
 async function saveTodo(req, res){
     try{
         let todo = new Todo();
-        todo.name = req.body.name;
         todo.description = req.body.description;
         let todoStored = await todo.save();
         if(!todoStored) return res.status(500).send({message: global.st.err_save_todo});
@@ -39,7 +38,7 @@ async function saveTodo(req, res){
 async function updateTodo(req, res){
     try{
         let id = req.params.id;
-        let todoUpdated = await Todo.findByIdAndUpdate(id, {complete: req.body.complete});
+        let todoUpdated = await Todo.findByIdAndUpdate(id, req.body);
         if(!todoUpdated) return res.status(500).send({message: global.st.err_update_todo});
         res.status(200).send({todo: todoUpdated});
     }catch(err){
